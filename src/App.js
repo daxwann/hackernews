@@ -24,10 +24,18 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: list,
-      date: new Date()
+      list,
     };
+
+    this.onDismiss = this.onDismiss.bind(this);
   }
+
+  onDismiss(id) {
+    const isNotId = item => item.objectID !== id;
+    const updatedList = this.state.list.filter(isNotId);
+    this.setState({list: updatedList});
+  }
+
   render() {
     return (
       <div className="App">
@@ -38,7 +46,14 @@ class App extends Component {
                 <span>{item.author}</span>
                 <span>{item.num_comments}</span>
                 <span>{item.points}</span>
-                <span>{this.state.date.toLocaleTimeString()}</span>
+                <span>
+                  <button 
+                    type="button"
+                    onClick={() => this.onDismiss(item.objectID)}
+                  >
+                    Dismiss
+                  </button>
+                </span>
               </div>
         )}
       </div>
